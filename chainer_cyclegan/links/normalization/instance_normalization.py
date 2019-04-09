@@ -1,3 +1,4 @@
+import chainer
 from chainer import cuda
 from chainer import functions
 from chainer import links
@@ -34,18 +35,17 @@ class InstanceNormalization(links.BatchNormalization):
         shape_ins = (1, B * C) + shape_org[2:]
         x_reshaped = functions.reshape(x, shape_ins)
 
-        if hasattr(self, 'gamma'):
-            gamma = self.gamma
-        else:
-            with cuda.get_device_from_id(self._device_id):
-                gamma = variable.Variable(self.xp.ones(
-                    self.avg_mean.shape, dtype=x.dtype))
-        if hasattr(self, 'beta'):
-            beta = self.beta
-        else:
-            with cuda.get_device_from_id(self._device_id):
-                beta = variable.Variable(self.xp.zeros(
-                    self.avg_mean.shape, dtype=x.dtype))
+        gamma = self.gamma
+        if gamma is None:
+            with chainer.using_device(self.device):
+                gamma = self.xp.ones(
+                    self.avg_mean.shape, dtype=self._highprec_dtype)
+
+        beta = self.beta
+        if beta is None:
+            with chainer.using_device(self.device):
+                beta = self.xp.zeros(
+                    self.avg_mean.shape, dtype=self._highprec_dtype)
 
         gamma = functions.tile(gamma, (B,))
         beta = functions.tile(beta, (B,))
