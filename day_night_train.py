@@ -15,8 +15,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--device', type=int, default=8)
     parser.add_argument('--lr', type=float, default=0.1)
-    parser.add_argument('load_size', type=int, default=0)
-    parser.add_argument('fine_size', type=int, default=384)
+    parser.add_argument('--load_size', type=int, default=0)
+    parser.add_argument('--fine_size', type=int, default=384)
     parser.add_argument('--batchsize', '-B', type=int, default=2,
                         help='Learning minibatch size')
     parser.add_argument('--epoch', '-E', type=int, default=5,
