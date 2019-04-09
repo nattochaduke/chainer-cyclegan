@@ -10,6 +10,7 @@ import chainer
 from chainer_cyclegan.datasets import DayNightDataset
 from chainer_cyclegan.datasets import CycleGANTransform
 from examples.horse2zebra.train import train
+from chainerui.utils import save_args
 
 def main():
     parser = argparse.ArgumentParser()
@@ -34,6 +35,7 @@ def main():
             CycleGANTransform(load_size=(args.load_size, args.load_size), fine_size=(args.fine_size, args.fine_size),
                               train=False))
 
-    train(dataset_train, dataset_test, args.device, args.batchsize, args.skip, args.intermediates, niter=args.niter)
+    train(dataset_train, dataset_test, args.device, args.batchsize,
+          args.skip, args.intermediates, niter=args.niter, args=args)
 if __name__ == '__main__':
     main()
