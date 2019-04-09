@@ -58,6 +58,19 @@ class UnpairedDirectoryDataset(UnpairedDatasetBase):
             split=split, paths=paths)
 
 
+class UnpairedDirectoriesDataset(UnpairedDatasetBase):
+
+    def __init__(self, directory_a, directory_b, split):
+        paths = collections.defaultdict(list)
+        for domain, domain_dir in zip('AB', [directory_a, directory_b]):
+            for img_file in glob.glob(osp.join(domain_dir, '*')):
+                img_file = osp.join(domain_dir, img_file)
+                paths[domain].append(img_file)
+        paths = dict(paths)
+
+        super(UnpairedDirectoriesDataset, self).__init__(
+            split=split, paths=paths)
+
 class CycleGANTransform(object):
 
     def __init__(self, train=True, load_size=(286, 286), fine_size=(256, 256)):
@@ -69,9 +82,10 @@ class CycleGANTransform(object):
         out_data = []
         for img in in_data:
             img = img.transpose(2, 0, 1)
-            img = chainercv.transforms.resize(
-                img, size=self._load_size,
-                interpolation=PIL.Image.BICUBIC)
+            if self.load_size[0] != 0:
+                img = chainercv.transforms.resize(
+                    img, size=self._load_size,
+                    interpolation=PIL.Image.BICUBIC)
             if self._train:
                 img = chainercv.transforms.random_crop(
                     img, size=self._fine_size)
