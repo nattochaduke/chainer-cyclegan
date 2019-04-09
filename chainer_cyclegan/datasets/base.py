@@ -28,7 +28,7 @@ class UnpairedDatasetBase(object):
         return max(self._size[domain] for domain in 'AB')
 
     def __getitem__(self, index):
-        index_A = index % self._size['A']
+        index_A = np.random.randint(0, self._size['A'])
 
         if self._split == 'test':
             np.random.seed(index)
