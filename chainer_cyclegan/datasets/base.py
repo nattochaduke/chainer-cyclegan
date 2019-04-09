@@ -96,6 +96,8 @@ class CycleGANTransform(object):
                         img, size=self._fine_size)
                 img = chainercv.transforms.random_flip(img, x_random=True)
             else:
+                if img.shape[1] < self._fine_size[0] or img.shape[2] < self._fine_size[1]:
+                    img = chainercv.transforms.resize(img, self._fine_size)
                 img = chainercv.transforms.center_crop(
                     img, size=self._fine_size)
 
