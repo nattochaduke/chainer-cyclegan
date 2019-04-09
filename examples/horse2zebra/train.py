@@ -25,7 +25,7 @@ from chainer_cyclegan.models import ResnetGenerator
 from chainer_cyclegan.updaters import CycleGANUpdater
 
 
-def train(dataset_train, dataset_test, gpu, batch_size, suffix=''):
+def train(dataset_train, dataset_test, gpu, batch_size, suffix='', niter=100):
     np.random.seed(0)
     if gpu >= 0:
         chainer.cuda.get_device_from_id(gpu).use()
@@ -70,8 +70,8 @@ def train(dataset_train, dataset_test, gpu, batch_size, suffix=''):
     # Updater
 
     epoch_count = 1
-    niter = 100
-    niter_decay = 100
+    niter = niter
+    niter_decay = niter
 
     updater = CycleGANUpdater(
         iterator=iter_train,
@@ -104,11 +104,11 @@ def train(dataset_train, dataset_test, gpu, batch_size, suffix=''):
         target=D_B, filename='D_B_{.updater.epoch:08}.npz'),
         trigger=(1, 'epoch'))
 
+    log_interval = (100, 'iteration')
     trainer.extend(
-        extensions.LogReport(trigger=(20 // batch_size, 'iteration')))
+        extensions.LogReport(trigger=log_interval))
 
     assert extensions.PlotReport.available()
-    log_interval = (0.2, 'epoch')
     trainer.extend(extensions.PlotReport(
         y_keys=['loss_gen_A', 'loss_gen_B'],
         x_key='iteration', file_name='loss_gen.png',

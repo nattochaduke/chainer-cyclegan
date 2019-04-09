@@ -17,14 +17,12 @@ def main():
     parser.add_argument('--lr', type=float, default=0.1)
     parser.add_argument('load_size', type=int, default=0)
     parser.add_argument('fine_size', type=int, default=384)
-    parser.add_argument('--batchsize', '-B', type=int, default=1,
+    parser.add_argument('--batchsize', '-B', type=int, default=2,
                         help='Learning minibatch size')
     parser.add_argument('--epoch', '-E', type=int, default=5,
                         help='Number of epochs to train')
-    parser.add_argument('--preprocessor', choices=['none', 'he', 'sqrt_he'])
-    parser.add_argument('--color', type=float, default=0)
-    parser.add_argument('--noise', action='store_true')
-    parser.add_argument('--jpeg', type=float, default=0.5)
+    parser.add_argument('--device')
+    parser.add_argument('--niter', type=int, default=10)
     args = parser.parse_args()
 
     dataset_train = chainer.datasets.TransformDataset(
@@ -35,7 +33,5 @@ def main():
             CycleGANTransform(load_size=(args.load_size, args.load_size), fine_size=(args.fine_size, args.fine_size),
                               train=False))
 
-    device = 3
-    batchsize = 2
 
-    train(dataset_train, dataset_test, device, batchsize)
+    train(dataset_train, dataset_test, args.device, args.batchsize)
