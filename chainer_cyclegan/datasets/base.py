@@ -64,7 +64,7 @@ class UnpairedDirectoriesDataset(UnpairedDatasetBase):
         paths = collections.defaultdict(list)
         for domain, domain_dir in zip('AB', [directory_a, directory_b]):
             for img_file in glob.glob(osp.join(domain_dir, '*')):
-                img_file = osp.join(domain_dir, img_file)
+                #img_file = osp.join(domain_dir, img_file)
                 paths[domain].append(img_file)
         paths = dict(paths)
 
