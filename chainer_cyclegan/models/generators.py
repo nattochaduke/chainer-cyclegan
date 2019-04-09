@@ -138,7 +138,7 @@ class ResnetGeneratorWithSkip(chainer.Chain):
             self.l9 = lambda x: F.relu(x)
             for i in range(intermediates):
                 setattr(self, f'l{i+10}', ResnetBlock())
-            self.l19 = L.Deconvolution2D(256, 128, ksize=3, stride=2, pad=1,
+            self.l19 = L.Deconvolution2D(None, 128, ksize=3, stride=2, pad=1,
                                          initialW=initialW)
             self.l20 = InstanceNormalization(128, decay=0.9, eps=1e-05)
             self.l21 = lambda x: F.relu(x)
@@ -172,13 +172,13 @@ class ResnetGeneratorWithSkip(chainer.Chain):
                     size=h.shape[3], k=func.ksize, s=func.stride[1],
                     p=func.pad[1])
                 func.outsize = (outsize_h + 1, outsize_w + 1)
-                if i == 19 and self.skip:
+                if i == 22 and self.skip:
                     h = F.concat([h, skipping])
                     h = func(h)
                 else:
                     h = func(h)
             else:
                 h = func(h)
-                if i == 7 and self.skip:
+                if i == 6 and self.skip:
                     skipping = h
         return h
