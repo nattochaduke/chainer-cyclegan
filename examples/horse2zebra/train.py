@@ -29,7 +29,7 @@ chainer.global_config.autotune = True
 chainer.global_config.type_check = False
 
 def train(dataset_train, dataset_test, gpu, batch_size, skip=False, intermediats=9, suffix='', niter=100,
-          args=None, comment=''):
+          args=None, comment='', task='logs'):
     np.random.seed(0)
     if gpu >= 0:
         chainer.cuda.get_device_from_id(gpu).use()
@@ -92,7 +92,7 @@ def train(dataset_train, dataset_test, gpu, batch_size, skip=False, intermediats
 
     directory = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
     directory = comment + '_' + directory
-    out = osp.join('logs', directory)
+    out = osp.join(task, directory)
     out += suffix
     trainer = training.Trainer(
         updater, (niter + niter_decay, 'epoch'), out=out)
