@@ -39,13 +39,13 @@ class InstanceNormalization(links.BatchNormalization):
         if gamma is None:
             with chainer.using_device(self.device):
                 gamma = self.xp.ones(
-                    self.avg_mean.shape, dtype=self._highprec_dtype)
+                    self.avg_mean.shape, dtype=self._dtype)
 
         beta = self.beta
         if beta is None:
             with chainer.using_device(self.device):
                 beta = self.xp.zeros(
-                    self.avg_mean.shape, dtype=self._highprec_dtype)
+                    self.avg_mean.shape, dtype=self._dtype)
 
         gamma = functions.tile(gamma, (B,))
         beta = functions.tile(beta, (B,))
