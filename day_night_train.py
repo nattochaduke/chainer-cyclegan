@@ -34,4 +34,6 @@ def main():
                               train=False))
 
     train(dataset_train, dataset_test, args.device, args.batchsize)
-    
+
+if __name__ == '__main__':
+    main()
