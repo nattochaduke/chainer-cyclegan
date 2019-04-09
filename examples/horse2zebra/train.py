@@ -108,22 +108,23 @@ def train(dataset_train, dataset_test, gpu, batch_size, suffix=''):
         extensions.LogReport(trigger=(20 // batch_size, 'iteration')))
 
     assert extensions.PlotReport.available()
+    log_interval = (0.2, 'epoch')
     trainer.extend(extensions.PlotReport(
         y_keys=['loss_gen_A', 'loss_gen_B'],
         x_key='iteration', file_name='loss_gen.png',
-        trigger=(100 // batch_size, 'iteration')))
+        trigger=log_interval))
     trainer.extend(extensions.PlotReport(
         y_keys=['loss_dis_A', 'loss_dis_B'],
         x_key='iteration', file_name='loss_dis.png',
-        trigger=(100 // batch_size, 'iteration')))
+        trigger=log_interval))
     trainer.extend(extensions.PlotReport(
         y_keys=['loss_cyc_A', 'loss_cyc_B'],
         x_key='iteration', file_name='loss_cyc.png',
-        trigger=(100 // batch_size, 'iteration')))
+        trigger=log_interval))
     trainer.extend(extensions.PlotReport(
         y_keys=['loss_idt_A', 'loss_idt_B'],
         x_key='iteration', file_name='loss_idt.png',
-        trigger=(100 // batch_size, 'iteration')))
+        trigger=log_interval))
 
     trainer.extend(extensions.PrintReport([
         'epoch', 'iteration', 'elapsed_time',
