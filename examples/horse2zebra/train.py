@@ -21,11 +21,11 @@ from chainer_cyclegan.datasets import CycleGANTransform
 from chainer_cyclegan.datasets import Horse2ZebraDataset
 from chainer_cyclegan.extensions import CycleGANEvaluator
 from chainer_cyclegan.models import NLayerDiscriminator
-from chainer_cyclegan.models import ResnetGenerator
+from chainer_cyclegan.models import ResnetGenerator,ResnetSkipGenerator
 from chainer_cyclegan.updaters import CycleGANUpdater
 
 
-def train(dataset_train, dataset_test, gpu, batch_size, suffix='', niter=100):
+def train(dataset_train, dataset_test, gpu, batch_size, skip=False, intermediats=9, suffix='', niter=100):
     np.random.seed(0)
     if gpu >= 0:
         chainer.cuda.get_device_from_id(gpu).use()
@@ -33,8 +33,8 @@ def train(dataset_train, dataset_test, gpu, batch_size, suffix='', niter=100):
 
     # Model
 
-    G_A = ResnetGenerator()
-    G_B = ResnetGenerator()
+    G_A = ResnetSkipGenerator(skip=skip, intermediates=intermediats)
+    G_B = ResnetSkipGenerator(skip=skip, intermediates=intermediats)
     D_A = NLayerDiscriminator()
     D_B = NLayerDiscriminator()
 

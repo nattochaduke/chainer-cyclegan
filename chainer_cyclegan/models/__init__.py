@@ -6,3 +6,4 @@ from . import generators
 NLayerDiscriminator = discriminators.NLayerDiscriminator
 
 ResnetGenerator = generators.ResnetGenerator
+ResnetSkipGenerator = generators.ResnetGeneratorWithSkip

@@ -21,7 +21,9 @@ def main():
                         help='Learning minibatch size')
     parser.add_argument('--epoch', '-E', type=int, default=5,
                         help='Number of epochs to train')
-    parser.add_argument('--niter', type=int, default=10)
+    parser.add_argument('--niter', type=int, default=100)
+    parser.add_argument('--skip', action='store_true')
+    parser.add_argument('--intermeidates', type=int, default=9)
     args = parser.parse_args()
 
     dataset_train = chainer.datasets.TransformDataset(
@@ -32,7 +34,6 @@ def main():
             CycleGANTransform(load_size=(args.load_size, args.load_size), fine_size=(args.fine_size, args.fine_size),
                               train=False))
 
-    train(dataset_train, dataset_test, args.device, args.batchsize)
-
+    train(dataset_train, dataset_test, args.device, args.batchsize, args.skip, args.intermediates, niter=args.niter)
 if __name__ == '__main__':
     main()
