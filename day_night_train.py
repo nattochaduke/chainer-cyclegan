@@ -21,7 +21,6 @@ def main():
                         help='Learning minibatch size')
     parser.add_argument('--epoch', '-E', type=int, default=5,
                         help='Number of epochs to train')
-    parser.add_argument('--device', type=int, default=0)
     parser.add_argument('--niter', type=int, default=10)
     args = parser.parse_args()
 
