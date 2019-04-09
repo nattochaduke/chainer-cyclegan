@@ -82,7 +82,7 @@ class CycleGANTransform(object):
         out_data = []
         for img in in_data:
             img = img.transpose(2, 0, 1)
-            if self.load_size[0] != 0:
+            if self._load_size[0] != 0:
                 img = chainercv.transforms.resize(
                     img, size=self._load_size,
                     interpolation=PIL.Image.BICUBIC)
