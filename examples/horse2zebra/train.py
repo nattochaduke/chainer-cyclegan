@@ -26,7 +26,8 @@ from chainer_cyclegan.models import ResnetGenerator,ResnetSkipGenerator
 from chainer_cyclegan.updaters import CycleGANUpdater
 
 
-def train(dataset_train, dataset_test, gpu, batch_size, skip=False, intermediats=9, suffix='', niter=100, args=None):
+def train(dataset_train, dataset_test, gpu, batch_size, skip=False, intermediats=9, suffix='', niter=100,
+          args=None, comment=''):
     np.random.seed(0)
     if gpu >= 0:
         chainer.cuda.get_device_from_id(gpu).use()
@@ -87,7 +88,9 @@ def train(dataset_train, dataset_test, gpu, batch_size, skip=False, intermediats
 
     # Trainer
 
-    out = osp.join('logs', datetime.datetime.now().strftime('%Y%m%d_%H%M%S'))
+    directory = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+    directory = comment + '_' + directory
+    out = osp.join('logs', directory)
     out += suffix
     trainer = training.Trainer(
         updater, (niter + niter_decay, 'epoch'), out=out)

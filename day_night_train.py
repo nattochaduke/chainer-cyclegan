@@ -25,6 +25,7 @@ def main():
     parser.add_argument('--niter', type=int, default=100)
     parser.add_argument('--skip', action='store_true')
     parser.add_argument('--intermeidates', type=int, default=9)
+    parser.add_argument('--comment', type=str, default='')
     args = parser.parse_args()
 
     dataset_train = chainer.datasets.TransformDataset(
@@ -36,6 +37,6 @@ def main():
                               train=False))
 
     train(dataset_train, dataset_test, args.device, args.batchsize,
-          args.skip, args.intermediates, niter=args.niter, args=args)
+          args.skip, args.intermediates, niter=args.niter, args=args, comment=comment)
 if __name__ == '__main__':
     main()
