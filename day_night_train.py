@@ -12,6 +12,9 @@ from chainer_cyclegan.datasets import CycleGANTransform
 from examples.horse2zebra.train import train
 from chainerui.utils import save_args
 
+chainer.global_config.autotune = True
+chainer.global_config.type_check = False
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--device', type=int, default=8)

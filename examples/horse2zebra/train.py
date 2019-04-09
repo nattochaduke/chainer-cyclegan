@@ -25,6 +25,8 @@ from chainer_cyclegan.models import NLayerDiscriminator
 from chainer_cyclegan.models import ResnetGenerator,ResnetSkipGenerator
 from chainer_cyclegan.updaters import CycleGANUpdater
 
+chainer.global_config.autotune = True
+chainer.global_config.type_check = False
 
 def train(dataset_train, dataset_test, gpu, batch_size, skip=False, intermediats=9, suffix='', niter=100,
           args=None, comment=''):
