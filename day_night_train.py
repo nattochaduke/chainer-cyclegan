@@ -21,7 +21,7 @@ def main():
                         help='Learning minibatch size')
     parser.add_argument('--epoch', '-E', type=int, default=5,
                         help='Number of epochs to train')
-    parser.add_argument('--device')
+    parser.add_argument('--device', type=int, default=0)
     parser.add_argument('--niter', type=int, default=10)
     args = parser.parse_args()
 
@@ -33,5 +33,5 @@ def main():
             CycleGANTransform(load_size=(args.load_size, args.load_size), fine_size=(args.fine_size, args.fine_size),
                               train=False))
 
-
     train(dataset_train, dataset_test, args.device, args.batchsize)
+    
