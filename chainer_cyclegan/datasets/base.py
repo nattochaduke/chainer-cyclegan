@@ -87,12 +87,15 @@ class CycleGANTransform(object):
                     img, size=self._load_size,
                     interpolation=PIL.Image.BICUBIC)
             if self._train:
+                img = chainercv.transforms.random_sized_crop(
+                    img, (0.7, 1), (0.85, 1.18))
                 img = chainercv.transforms.random_crop(
                     img, size=self._fine_size)
                 img = chainercv.transforms.random_flip(img, x_random=True)
             else:
                 img = chainercv.transforms.center_crop(
                     img, size=self._fine_size)
+
             img = img.astype(np.float32) / 255  # ToTensor
             img = (img - 0.5) / 0.5  # Normalize
             out_data.append(img)
