@@ -137,7 +137,7 @@ class ResnetGeneratorWithSkip(chainer.Chain):
             self.l8 = InstanceNormalization(256, decay=0.9, eps=1e-05)
             self.l9 = lambda x: F.relu(x)
             for i in range(intermediates):
-                setattr(ResnetBlock, f'l{i+10}', self)
+                setattr(self, f'l{i+10}', ResnetBlock())
             self.l19 = L.Deconvolution2D(256, 128, ksize=3, stride=2, pad=1,
                                          initialW=initialW)
             self.l20 = InstanceNormalization(128, decay=0.9, eps=1e-05)
